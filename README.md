@@ -109,7 +109,7 @@ The codebase is organized into the following Jupyter Notebooks:
    ```bash
    git clone https://github.com/your-username/sql-injection-detection.git
    cd sql-injection-detection
-````
+   ````
 
 2. Set up a virtual environment:
 
