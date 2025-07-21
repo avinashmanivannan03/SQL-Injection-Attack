@@ -1,4 +1,4 @@
-# SQL Injection Attack Detection using Deep Learning
+# InSpectra: Intelligent SQL Injection Detection via Graph Learning and Deep Learning
 
 ## Overview
 
