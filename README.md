@@ -2,9 +2,12 @@
 
 ## Overview
 
-This project presents a comprehensive study and implementation of various deep learning and machine learning models for the detection of SQL Injection (SQLi) attacks. SQLi remains a critical vulnerability in web applications, allowing attackers to manipulate database queries to gain unauthorized access, exfiltrate sensitive data, or corrupt the database. The primary objective of this project is to develop and evaluate an AI-driven system capable of automatically and accurately detecting SQLi attempts in real-time.
+This project presents a comprehensive study and implementation of various deep learning and machine learning models for the detection of SQL Injection (SQLi) attacks. SQLi remains a critical vulnerability in web applications, allowing attackers to manipulate database queries to gain unauthorized access, exfiltrate sensitive data, or corrupt the database.
+
+The primary objective of this project is to develop and evaluate an AI-driven system capable of automatically and accurately detecting SQLi attempts in real-time.
 
 This repository explores and compares the performance of four advanced models:
+
 - Graph Neural Network (GNN)
 - Contrastive Learning with Siamese Networks
 - Transformer (BERT) + PCA + SVM (Hybrid Approach)
@@ -14,56 +17,48 @@ This repository explores and compares the performance of four advanced models:
 
 ## Table of Contents
 
-- [Dataset Description](#dataset-description)  
-- [Project Structure](#project-structure)  
-- [Models Implemented](#models-implemented)  
-- [Getting Started](#getting-started)  
-  - [Prerequisites](#prerequisites)  
-  - [Installation](#installation)  
-  - [Usage](#usage)  
-- [Training the Models](#training-the-models)  
-- [Making Predictions](#making-predictions)  
-- [Results and Conclusion](#results-and-conclusion)  
-- [Contributing](#contributing)  
+- [Dataset Description](#dataset-description)
+- [Project Structure](#project-structure)
+- [Models Implemented](#models-implemented)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+  - [Training the Models](#training-the-models)
+  - [Making Predictions](#making-predictions)
+- [Results and Conclusion](#results-and-conclusion)
+- [Future Work](#future-work)
+- [Contributing](#contributing)
 - [License](#license)
 
 ---
 
 ## Dataset Description
 
-The project utilizes the **SQL Injection Dataset** available on Kaggle. This dataset comprises website traffic data, where each entry is a SQL query string. The queries are labeled as either malicious (`1`) or benign (`0`).
+The project utilizes the SQL Injection Dataset available on Kaggle. This dataset comprises website traffic data, where each entry is a SQL query string. The queries are labeled as either malicious (`1`) or benign (`0`).
 
 **Dataset Source**: Kaggle SQL Injection Dataset
 
 ### Data Distribution
 
-| Dataset File             | Benign Queries (Label 0) | Malicious Queries (Label 1) | Total   |
-|--------------------------|---------------------------|------------------------------|---------|
-| `trainingdata.csv`       | 42,360                    | 55,915                       | 98,275  |
-| `testingdata.csv`        | 13,134                    | 11,573                       | 24,707  |
-| `testinglongdata_500.csv`| 100                       | 400                          | 500     |
-| `testinglongdatav2.csv`  | 20                        | 300                          | 320     |
+| Dataset File              | Benign Queries (Label 0) | Malicious Queries (Label 1) | Total    |
+|---------------------------|---------------------------|------------------------------|----------|
+| trainingdata.csv          | 42,360                    | 55,915                       | 98,275   |
+| testingdata.csv           | 13,134                    | 11,573                       | 24,707   |
+| testinglongdata_500.csv   | 100                       | 400                          | 500      |
+| testinglongdatav2.csv     | 20                        | 300                          | 320      |
 
 ---
 
 ## Project Structure
 
-The project's codebase is organized into the following Jupyter notebooks:
+The codebase is organized into the following Jupyter Notebooks:
 
-- **`CYBER_DATASET_DESCRIPTION.ipynb`**  
-  Provides a detailed exploratory data analysis (EDA) of the datasets.
-
-- **`cyber-gnn-final.ipynb`**  
-  Implements a Graph Neural Network (GNN) for SQLi detection.
-
-- **`CYBER_CONTRASTIVE_LEARNING_WORKING.ipynb`**  
-  Implements contrastive learning using a Siamese Network with Triplet Loss.
-
-- **`CYBER_TRANSFORMER+AUTOENCODER.ipynb`**  
-  Implements a hybrid model using BERT, PCA, and an Autoencoder.
-
-- **`CYBER_BILSTM+ATTENTION_MECHANISM.ipynb`**  
-  Implements a BiLSTM with attention mechanism for classification.
+- `CYBER_DATASET_DESCRIPTION.ipynb`: Exploratory Data Analysis (EDA) and statistics.
+- `cyber-gnn-final.ipynb`: Implementation of Graph Neural Network (GNN).
+- `CYBER_CONTRASTIVE_LEARNING_WORKING.ipynb`: Contrastive learning using a Siamese Network.
+- `CYBER_TRANSFORMER+AUTOENCODER.ipynb`: Transformer + PCA + One-Class SVM model.
+- `CYBER_BILSTM+ATTENTION_MECHANISM.ipynb`: BiLSTM with Attention Mechanism.
 
 ---
 
@@ -71,36 +66,31 @@ The project's codebase is organized into the following Jupyter notebooks:
 
 ### 1. Graph Neural Network (GNN)
 
-- **Notebook**: `cyber-gnn-final.ipynb`  
-- **Methodology**: SQL queries modeled as graphs with GCNs learning structural syntax.  
-- **Why GNN?** Captures complex structural relationships.  
-- **Accuracy**: **96.10%**
+- **Notebook**: `cyber-gnn-final.ipynb`
+- **Approach**: SQL queries are parsed into token-based graphs. GCN layers extract relational structure and semantics.
+- **Strength**: Captures syntax and structural dependencies within queries.
+- **Accuracy**: 96.10%
 
----
+### 2. Contrastive Learning with Siamese Networks
 
-### 2. Contrastive Learning
-
-- **Notebook**: `CYBER_CONTRASTIVE_LEARNING_WORKING.ipynb`  
-- **Methodology**: Siamese Network with Triplet Loss learns distance-based embeddings.  
-- **Why Contrastive Learning?** Generalizes well to zero-day attacks.  
-- **Accuracy**: **95.37%**
-
----
+- **Notebook**: `CYBER_CONTRASTIVE_LEARNING_WORKING.ipynb`
+- **Approach**: Learns vector representations using triplet loss to separate benign and malicious queries.
+- **Strength**: Effective for generalizing to zero-day and previously unseen attacks.
+- **Accuracy**: 95.37%
 
 ### 3. Transformer + PCA + SVM (Hybrid Approach)
 
-- **Notebook**: `CYBER_TRANSFORMER+AUTOENCODER.ipynb`  
-- **Methodology**: Sentence Transformer for embeddings + PCA + One-Class SVM.  
-- **Why Hybrid?** Leverages Transformer power with efficient anomaly detection.  
-- **Accuracy**: **63.16%**
-
----
+- **Notebook**: `CYBER_TRANSFORMER+AUTOENCODER.ipynb`
+- **Approach**: Embeddings from Sentence-BERT reduced using PCA, then passed to One-Class SVM.
+- **Strength**: Lightweight inference; hybrid approach combining semantic understanding with anomaly detection.
+- **Accuracy**: 63.16%
 
 ### 4. BiLSTM with Attention Mechanism
 
-- **Notebook**: `CYBER_BILSTM+ATTENTION_MECHANISM.ipynb`  
-- **Methodology**: Sequence modeling of SQL queries with focus on important tokens.  
-- **Accuracy**: **53.15%**
+- **Notebook**: `CYBER_BILSTM+ATTENTION_MECHANISM.ipynb`
+- **Approach**: BiLSTM models sequence flow; attention layers highlight important tokens.
+- **Strength**: Captures contextual token dependencies.
+- **Accuracy**: 53.15%
 
 ---
 
@@ -108,51 +98,51 @@ The project's codebase is organized into the following Jupyter notebooks:
 
 ### Prerequisites
 
-- Python 3.9 or higher  
-- Pip and optionally Conda  
+- Python 3.9 or higher
+- pip (Python package installer)
 - CUDA-enabled GPU (recommended)
-
----
 
 ### Installation
 
-1. **Clone the repository**:
-    ```bash
-    git clone https://github.com/your-username/sql-injection-detection.git
-    cd sql-injection-detection
-    ```
+1. Clone the repository:
 
-2. **Set up virtual environment**:
-    ```bash
-    python -m venv venv
-    source venv/bin/activate  # Windows: venv\Scripts\activate
-    ```
+   ```bash
+   git clone https://github.com/your-username/sql-injection-detection.git
+   cd sql-injection-detection
+````
 
-3. **Install dependencies**:
-    ```bash
-    pip install -r requirements.txt
-    ```
+2. Set up a virtual environment:
 
-    **requirements.txt** should include:
-    ```
-    pandas
-    numpy
-    torch
-    torch-geometric
-    networkx
-    nltk
-    gensim
-    sqlparse
-    scikit-learn
-    tensorflow
-    transformers
-    imblearn
-    matplotlib
-    ```
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
 
-4. **Download Dataset**:
-    - Download from [Kaggle](https://www.kaggle.com/)
-    - Extract `.csv` files into project root directory.
+3. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+   **Sample `requirements.txt`:**
+
+   ```
+   pandas
+   numpy
+   torch
+   torch-geometric
+   networkx
+   nltk
+   gensim
+   sqlparse
+   scikit-learn
+   tensorflow
+   transformers
+   imbalanced-learn
+   matplotlib
+   ```
+
+4. Download the dataset from [Kaggle](https://www.kaggle.com/) and extract all CSV files into the root directory.
 
 ---
 
@@ -160,15 +150,13 @@ The project's codebase is organized into the following Jupyter notebooks:
 
 ### Training the Models
 
-- Open any notebook (e.g., `cyber-gnn-final.ipynb`) in **Jupyter Lab**, **Colab**, or **VS Code**.
-- Run cells sequentially. Notebooks are self-contained.
-- Trained models will be saved for later inference.
+1. Open any notebook using Jupyter Notebook, VS Code, or Google Colab.
+2. Run all cells sequentially.
+3. Models are trained and stored automatically for prediction/inference.
 
----
+### Making Predictions
 
-## Making Predictions
-
-Here's a sample prediction script for the **GNN model**:
+A simplified example using the GNN model:
 
 ```python
 import torch
@@ -188,86 +176,111 @@ def tokenize_sql(query):
 
 def build_graph_for_prediction(query, word2vec_model):
     tokens = tokenize_sql(query)
-    # Graph building logic here
+    # Add actual graph construction logic here...
     pass  # Placeholder
 
 def predict(query_string):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.to(device)
-    
+
     graph_data = build_graph_for_prediction(query_string, w2v_model).to(device)
     
     with torch.no_grad():
         out = model(graph_data.x, graph_data.edge_index, graph_data.batch)
         pred = out.argmax(dim=1).item()
-        
+    
     return "Malicious (SQL Injection)" if pred == 1 else "Benign"
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     test_query_1 = "SELECT * FROM users WHERE id = '1' OR '1'='1'"
     test_query_2 = "SELECT product_name FROM products WHERE category = 'Gifts'"
-    
+
     print(f"Query: '{test_query_1}' -> Prediction: {predict(test_query_1)}")
     print(f"Query: '{test_query_2}' -> Prediction: {predict(test_query_2)}")
-
-## 📊 Results and Conclusion
-
-After rigorous experimentation and evaluation, the performance of all implemented models was analyzed based on their accuracy on the test datasets. The findings are summarized below:
-
-| Model                                 | Description                                                                                   | Accuracy   |
-|--------------------------------------|-----------------------------------------------------------------------------------------------|------------|
-| **Graph Neural Network (GNN)**       | Captures the structural and syntactic relationships between tokens in a SQL query.           | **96.10%** |
-| **Contrastive Learning**             | Learns discriminative embeddings using Siamese Network with Triplet Loss.                    | **95.37%** |
-| **Transformer + PCA + SVM (Hybrid)** | Uses Sentence-BERT for embedding, PCA for dimensionality reduction, and SVM for classification. | 63.16%     |
-| **BiLSTM with Attention**            | Sequence-based modeling using bidirectional LSTM layers and attention mechanism.             | 53.15%     |
-
-### ✅ Key Takeaways:
-
-- **Graph Neural Network (GNN)** emerged as the most effective model, demonstrating that capturing the graph-based structure of SQL queries is critical to accurately identifying complex and obfuscated SQL Injection attacks.
-
-- **Contrastive Learning with Siamese Networks** performed nearly as well as GNN and showed excellent potential in generalizing to **zero-day attacks** due to its metric learning approach.
-
-- The **Transformer-based hybrid approach**, while promising in theory, showed relatively poor performance likely due to noise and lack of optimization in the anomaly detection setup with One-Class SVM.
-
-- **BiLSTM with Attention**, although good at modeling sequences, did not perform competitively—highlighting that pure sequence modeling may be insufficient for detecting subtle SQLi patterns.
+```
 
 ---
 
-### 🚀 Future Work
+## Results and Conclusion
 
-To further enhance the robustness, accuracy, and generalization capabilities of the system, the following directions are proposed:
+| Model                            | Description                                                             | Accuracy |
+| -------------------------------- | ----------------------------------------------------------------------- | -------- |
+| Graph Neural Network (GNN)       | Captures structural and syntactic token relationships in SQL queries    | 96.10%   |
+| Contrastive Learning             | Learns discriminative embeddings via Siamese Network with Triplet Loss  | 95.37%   |
+| Transformer + PCA + SVM (Hybrid) | Sentence-BERT for embeddings, PCA for reduction, SVM for classification | 63.16%   |
+| BiLSTM with Attention            | Sequence model with contextual awareness and attention weighting        | 53.15%   |
 
-- **Ensemble Learning**:  
-  Combine the strengths of the top two models—**GNN** and **Contrastive Learning**—in an ensemble architecture. Potential strategies include:
-  - Majority voting
-  - Confidence-weighted ensemble
-  - Meta-learning (stacked generalization)
+### Observations
 
-- **Zero-Day Attack Simulation**:  
-  Introduce synthetically generated SQLi queries with novel obfuscation and payloads to evaluate and improve model robustness.
-
-- **Real-Time API Deployment**:  
-  Wrap the best-performing models into a lightweight, RESTful API for integration into web application firewalls (WAFs) or Intrusion Detection Systems (IDS).
-
-- **Explainability**:  
-  Integrate tools such as LIME, SHAP, or attention heatmaps to explain why a query is classified as malicious, aiding cybersecurity analysts.
-
-- **Active Learning Pipeline**:  
-  Allow human-in-the-loop training to continually improve model performance on unseen data through user feedback loops.
+* GNNs are most effective due to their ability to encode structural semantics.
+* Contrastive learning generalizes well, especially for previously unseen (zero-day) attacks.
+* Transformer-based hybrid models need careful tuning to avoid underfitting.
+* Sequence-only models like BiLSTM fall short in detecting complex SQLi patterns.
 
 ---
 
-## 🤝 Contributing
+## Future Work
 
-We welcome contributions from developers, researchers, and cybersecurity enthusiasts to make this project even better! Whether it's improving model performance, fixing bugs, enhancing documentation, or adding new features—your contributions are highly valued.
+Several enhancements are proposed:
 
-### 💡 How to Contribute
+1. **Model Ensembling**
+   Combine GNN and Contrastive Learning outputs for improved robustness using:
 
-1. **Fork the Repository**  
-   Click on the **Fork** button in the upper right-hand corner of this repository's page to create your own copy.
+   * Voting ensembles
+   * Weighted fusion
+   * Meta-learning
 
-2. **Clone your forked repository**
+2. **Zero-Day Attack Simulation**
+   Generate adversarial or novel attack payloads to test generalization.
+
+3. **API Deployment**
+   Deploy the models via RESTful API using FastAPI or Flask for real-time SQLi monitoring.
+
+4. **Model Explainability**
+   Apply LIME, SHAP, or attention heatmaps for interpretability.
+
+5. **Active Learning Framework**
+   Integrate human feedback loops to retrain on edge-case queries and reduce false positives.
+
+---
+
+## Contributing
+
+We welcome contributions from developers, researchers, and enthusiasts. Whether it's model improvement, documentation, or bug fixes—your help is appreciated.
+
+### How to Contribute
+
+1. **Fork the repository**
+   Click the **Fork** button on the top-right of this repository.
+
+2. **Clone your fork**
+
    ```bash
    git clone https://github.com/your-username/sql-injection-detection.git
    cd sql-injection-detection
+   ```
+
+3. **Create a new feature branch**
+
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+
+4. **Make your changes** and commit
+
+   ```bash
+   git commit -m "Add: AmazingFeature"
+   ```
+
+5. **Push the branch**
+
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+
+6. **Open a Pull Request** on GitHub. Provide a clear description and link any related issues.
+
+---
+
+
 
